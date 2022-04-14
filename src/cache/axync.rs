@@ -589,19 +589,19 @@ impl<V, U, CB, S> CacheProcessor<V, U, CB, S>
                         Some(_) = self.clear_rx.recv() => {
                             let _ = CacheCleaner::new(&mut self).clean().await?;
                         },
-                        _ = self.stop_rx.recv() => return self.handle_close_event(),
+                        // _ = self.stop_rx.recv() => return self.handle_close_event(),
                     }
             }
         })
     }
 
-    #[inline]
-    pub(crate) fn handle_close_event(&mut self) -> Result<(), CacheError> {
-        self.insert_buf_rx.close();
-        self.clear_rx.close();
-        self.stop_rx.close();
-        Ok(())
-    }
+    // #[inline]
+    // pub(crate) fn handle_close_event(&mut self) -> Result<(), CacheError> {
+    //     self.insert_buf_rx.close();
+    //     self.clear_rx.close();
+    //     self.stop_rx.close();
+    //     Ok(())
+    // }
 
     #[inline]
     pub(crate) fn handle_insert_event(&mut self, res: Option<Item<V>>) -> Result<(), CacheError> {
